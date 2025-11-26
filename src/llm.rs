@@ -24,20 +24,15 @@ impl Llm {
     pub fn init(history: &str) -> Llm {
 
         unsafe {
-            // Only set API Key if it doesn't exist
             if env::var("OPENAI_API_KEY").is_err() {
                 env::set_var("OPENAI_API_KEY", "lm-studio");
             }
 
-            // Only set Base URL if it doesn't exist
-            // Note: Some versions of Rig/OpenAI look for "OPENAI_API_BASE" instead.
-            // If "OPENAI_BASE_URL" doesn't work, try changing this string to "OPENAI_API_BASE".
             if env::var("OPENAI_BASE_URL").is_err() {
                 env::set_var("OPENAI_BASE_URL", "http://localhost:1234/v1");
             }
         }
 
-        // let client = openai::Client::from_env();
         let client = openai::Client::builder("stuff").base_url(
             &env::var("OPENAI_BASE_URL").unwrap_or("http://localhost:1234/v1".to_string())
         ).build();
