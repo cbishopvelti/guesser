@@ -1,12 +1,10 @@
 
 use std::error::Error;
-use std::io::{self, BufRead}; // Import BufRead for lines()
+use std::io::{self}; // Import BufRead for lines()
 
 use std::sync::Arc;
 use arrow_array::{RecordBatch, RecordBatchIterator, StringArray, ArrayRef, Int32Array};
 use guesser::db::get_table;
-use lancedb::arrow::arrow_schema::{Field, DataType, Schema};
-use guesser::db;
 
 // cargo run --bin gb
 #[tokio::main]

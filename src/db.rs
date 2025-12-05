@@ -1,9 +1,8 @@
 use std::error::Error;
 use lancedb::Table;
-use lancedb::arrow::{IntoArrow, arrow_schema::{DataType, Field, Schema}};
+use lancedb::arrow::arrow_schema::{DataType, Field, Schema};
 use arrow_array::RecordBatchIterator;
 use std::sync::Arc;
-use std::io;
 
 
 pub async fn get_table() -> Result<Table, Box<dyn Error>> {

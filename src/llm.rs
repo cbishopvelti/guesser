@@ -3,8 +3,6 @@ use std::env;
 use rig::{
     providers::openai::{self, CompletionModel}
 };
-use rig::completion::Prompt;
-use rig::prelude::*;
 
 use rig::agent::Agent;
 use regex::Regex;
@@ -76,7 +74,7 @@ impl Llm {
             .into_agent_builder()
             .context(&format!("/no_think Only return one valid bash command. Try and predict the users next command.\n\n{}", history));
 
-        agent = match (get_previous_command().await) {
+        agent = match get_previous_command().await {
             Some(prev_command) => {
                 agent.context(&prev_command)
             }

@@ -1,20 +1,8 @@
 pub mod llm;
 pub mod history;
 
-use crossterm::{
-    cursor,
-    event::{self, Event, KeyCode, KeyModifiers},
-    execute,
-    style::{Color, Print, SetForegroundColor},
-    terminal::{disable_raw_mode, enable_raw_mode, Clear, ClearType},
-};
-use std::io::{self, BufRead, BufReader, Write};
 use std::env;
-use rig::{
-    message::Message, providers::openai
-};
 use rig::completion::Prompt;
-use rig::prelude::*;
 use regex::Regex;
 use crate::llm::Llm;
 
@@ -34,7 +22,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let args: Vec<String> = env::args().collect();
 
-    let mut query = if args.len() > 1 {
+    let query = if args.len() > 1 {
         args[1].clone()
     } else {
         String::new()
