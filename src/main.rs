@@ -30,7 +30,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let history = format!("Historic bash commands:\n {}", history::get_history().unwrap());
 
-    let llm = Llm::init(&history);
+    let llm = Llm::init(&history).await;
 
     let args: Vec<String> = env::args().collect();
 

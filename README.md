@@ -24,3 +24,10 @@ _rust_gusser() {
 
 bind -x '"\C-g": _rust_gusser'
 ```
+
+## lancedb data viewer
+```
+docker run --rm -p 8080:8080 \
+  -v ~/home/chris/playground/guesser/data/dev:/data:ro \
+  ghcr.io/gordonmurray/lance-data-viewer:lancedb-0.24.3
+```

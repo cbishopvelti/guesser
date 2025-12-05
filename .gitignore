@@ -27,3 +27,4 @@ guesser-*.tar
 # Added by cargo
 
 /target
+/data
