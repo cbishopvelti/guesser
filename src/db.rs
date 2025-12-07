@@ -3,10 +3,17 @@ use lancedb::Table;
 use lancedb::arrow::arrow_schema::{DataType, Field, Schema};
 use arrow_array::RecordBatchIterator;
 use std::sync::Arc;
+use std::io;
 
 
 pub async fn get_table() -> Result<Table, Box<dyn Error>> {
-    let db = lancedb::connect("data/dev").execute().await.unwrap();
+
+    let home_dir = dirs::home_dir().ok_or_else(|| {
+        io::Error::new(io::ErrorKind::NotFound, "Could not find home directory")
+    })?;
+    let lancedb_path = home_dir.join(".guesser/lancedb");
+
+    let db = lancedb::connect(lancedb_path.to_str().unwrap()).execute().await.unwrap();
 
     let schema = Arc::new(Schema::new(vec![
         Field::new("id", DataType::Int32, false),

@@ -16,7 +16,8 @@ pub struct Llm {
 
 pub fn remove_think_tags(output: &str) -> String {
     // (?s) enables "dot matches newline" mode
-    let re = Regex::new(r"(?s)<think>.*?</think>").unwrap();
+    // let re = Regex::new(r"(?s)<think>.*?</think>").unwrap();
+    let re = Regex::new(r"(?s)<think></think>").unwrap();
     let cleaned = re.replace_all(output, "");
     cleaned.trim().to_string()
 }
@@ -72,10 +73,12 @@ impl Llm {
             .completion_model("qwen/qwen3-14b")
             .completions_api()
             .into_agent_builder()
-            .context(&format!("/no_think Only return one valid bash command. Try and predict the users next command.\n\n{}", history));
+            .context(&format!("/no_think Only return one valid bash command. Try and predict the users next command using historic commands:\n\n{}", history));
 
+        // println!("007");
         agent = match get_previous_command().await {
             Some(prev_command) => {
+                // println!("get_previous_command {:?}", prev_command);
                 agent.context(&prev_command)
             }
             _ => {

@@ -15,12 +15,15 @@ fn remove_think_tags(output: &str) -> String {
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-
-    let history = format!("Historic bash commands:\n {}", history::get_history().unwrap());
+    // println!("001");
+    let history = format!("Try and use historic bash commands, they are:\n {}", history::get_history().unwrap());
 
     let llm = Llm::init(&history).await;
 
     let args: Vec<String> = env::args().collect();
+
+    // println!("001.2 args {:?}", args);
+    // println!("001.2 history {:?}", history);
 
     let query = if args.len() > 1 {
         args[1].clone()
@@ -31,7 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let response = llm.agent
         .prompt(query)
         .await?;
-
+    // println!("-------------------");
     println!("{}", remove_think_tags(&response));
 
     Ok(())
